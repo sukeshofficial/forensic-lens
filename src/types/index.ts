@@ -146,3 +146,93 @@ export interface ImageForensicIndicator {
   evidence?: Record<string, unknown>;
   createdAt: string;
 }
+
+/* Phase 4: Browser Evidence Analysis Domain Models */
+
+export type SupportedBrowser = 'CHROME' | 'EDGE' | 'FIREFOX' | 'UNKNOWN';
+export type BrowserArtifactType = 'HISTORY' | 'DOWNLOADS' | 'BOOKMARKS' | 'SEARCH_ACTIVITY' | 'AUTO_DETECT';
+export type BrowserAnalysisStatus = 'PENDING' | 'ANALYZING' | 'COMPLETED' | 'FAILED';
+
+export interface BrowserEvidence {
+  id: string;
+  evidenceId: string;
+  caseId: string;
+  browser: SupportedBrowser;
+  artifactType: BrowserArtifactType;
+  filename: string;
+  fileSize: number;
+  parserVersion: string;
+  importedAt: string;
+  analysisStatus: BrowserAnalysisStatus;
+  analyzedAt?: string;
+  recordCount?: number;
+}
+
+export interface BrowserHistoryArtifact {
+  id: string;
+  caseId: string;
+  browserEvidenceId: string;
+  sourceEvidenceId: string;
+  browser: SupportedBrowser;
+  url: string;
+  title?: string;
+  visitTime?: string; // ISO 8601
+  visitCount?: number;
+  domain?: string;
+  rawTimestamp?: string | number;
+  sourceFile: string;
+  parserVersion: string;
+  createdAt: string;
+  bookmarked?: boolean;
+}
+
+export interface BrowserDownloadArtifact {
+  id: string;
+  caseId: string;
+  browserEvidenceId: string;
+  sourceEvidenceId: string;
+  browser: SupportedBrowser;
+  filename?: string;
+  downloadUrl?: string;
+  sourceUrl?: string;
+  downloadTime?: string; // ISO 8601
+  fileSize?: number;
+  localPath?: string;
+  mimeType?: string;
+  sourceFile: string;
+  parserVersion: string;
+  createdAt: string;
+  bookmarked?: boolean;
+}
+
+export interface BrowserBookmarkArtifact {
+  id: string;
+  caseId: string;
+  browserEvidenceId: string;
+  sourceEvidenceId: string;
+  browser: SupportedBrowser;
+  title?: string;
+  url: string;
+  folder?: string;
+  createdAtBrowser?: string; // ISO 8601
+  sourceFile: string;
+  parserVersion: string;
+  createdAt: string;
+  bookmarked?: boolean;
+}
+
+export interface BrowserSearchArtifact {
+  id: string;
+  caseId: string;
+  browserEvidenceId: string;
+  sourceEvidenceId: string;
+  browser: SupportedBrowser;
+  searchEngine?: string;
+  query: string;
+  timestamp?: string; // ISO 8601
+  sourceUrl: string;
+  sourceFile: string;
+  parserVersion: string;
+  createdAt: string;
+  bookmarked?: boolean;
+}

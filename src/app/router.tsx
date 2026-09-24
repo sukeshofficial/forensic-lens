@@ -5,8 +5,8 @@ import { DashboardPage } from '../pages/DashboardPage';
 import { CasesPage } from '../pages/CasesPage';
 import { EvidencePage } from '../pages/EvidencePage';
 import { ImageAnalysisPage } from '../pages/ImageAnalysisPage';
+import { BrowserAnalysisPage } from '../pages/BrowserAnalysisPage';
 import {
-  BrowserAnalysisPage,
   TimelinePage,
   ReportsPage,
   SettingsPage,

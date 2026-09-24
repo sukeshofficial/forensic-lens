@@ -11,9 +11,11 @@ import {
   Settings,
   ChevronLeft,
   ChevronRight,
-  ShieldAlert,
 } from 'lucide-react';
 import { useSidebarStore } from '../../stores';
+
+import logoHorizontal from '../../assets/forensic-lens-horizontal-lockup.png';
+import logoIcon from '../../assets/forensic-lens-app-icon.png';
 
 interface NavItem {
   name: string;
@@ -42,20 +44,20 @@ export const Sidebar: React.FC = () => {
       aria-label="Sidebar Navigation"
     >
       {/* Brand / Application Logo Header */}
-      <div className="flex h-14 items-center justify-between px-3 border-b border-slate-200 bg-white">
-        <div className="flex items-center gap-2.5 overflow-hidden">
-          <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded bg-slate-900 text-white shadow-xs">
-            <ShieldAlert className="h-5 w-5 text-sky-400" />
-          </div>
-          {!isCollapsed && (
-            <div className="flex flex-col truncate">
-              <span className="text-sm font-bold tracking-tight text-slate-900 font-mono">
-                ForensicLens
-              </span>
-              <span className="text-[10px] font-semibold text-slate-500 uppercase tracking-widest font-mono">
-                Workstation v1.0
-              </span>
-            </div>
+      <div className="flex h-14 items-center justify-between px-3 border-b border-slate-200 bg-white overflow-hidden">
+        <div className="flex items-center gap-2.5 min-w-0 w-full justify-start">
+          {isCollapsed ? (
+            <img
+              src={logoIcon}
+              alt="ForensicLens Logo"
+              className="h-8 w-8 object-contain shrink-0 mx-auto rounded-[999px]"
+            />
+          ) : (
+            <img
+              src={logoHorizontal}
+              alt="ForensicLens Workstation"
+              className="h-12 w-auto max-w-[200px] object-contain shrink min-w-0"
+            />
           )}
         </div>
       </div>

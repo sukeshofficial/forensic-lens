@@ -3,7 +3,7 @@ import { Sidebar } from './Sidebar';
 import { Header } from './Header';
 import { Breadcrumbs } from '../navigation/Breadcrumbs';
 import { useUIStore } from '../../stores';
-import { Search, X } from 'lucide-react';
+import { GlobalSearchModal } from '../search/GlobalSearchModal';
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -43,33 +43,11 @@ export const MainLayout: React.FC<LayoutProps> = ({ children, onLoadDemo }) => {
         </main>
       </div>
 
-      {/* Global Search Modal Placeholder */}
-      {globalSearchOpen && (
-        <div className="fixed inset-0 z-50 flex items-start justify-center bg-slate-900/40 pt-20 backdrop-blur-xs">
-          <div className="w-full max-w-lg rounded-lg border border-slate-200 bg-white p-4 shadow-xl">
-            <div className="flex items-center justify-between border-b border-slate-200 pb-3">
-              <div className="flex items-center gap-2 text-slate-600">
-                <Search className="h-4 w-4 text-slate-400" />
-                <input
-                  type="text"
-                  placeholder="Global Forensic Search (Phase 5)..."
-                  className="w-full bg-transparent text-xs font-mono outline-hidden text-slate-900 placeholder-slate-400"
-                  autoFocus
-                />
-              </div>
-              <button
-                onClick={() => setGlobalSearchOpen(false)}
-                className="text-slate-400 hover:text-slate-600"
-              >
-                <X className="h-4 w-4" />
-              </button>
-            </div>
-            <div className="py-6 text-center text-xs text-slate-500">
-              Global search across evidence hashes, keywords, and timeline correlation will be enabled in Phase 5.
-            </div>
-          </div>
-        </div>
-      )}
+      {/* Global Investigation Search Modal (Ctrl+K) */}
+      <GlobalSearchModal
+        isOpen={globalSearchOpen}
+        onClose={() => setGlobalSearchOpen(false)}
+      />
     </div>
   );
 };

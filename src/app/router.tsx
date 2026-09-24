@@ -6,8 +6,8 @@ import { CasesPage } from '../pages/CasesPage';
 import { EvidencePage } from '../pages/EvidencePage';
 import { ImageAnalysisPage } from '../pages/ImageAnalysisPage';
 import { BrowserAnalysisPage } from '../pages/BrowserAnalysisPage';
+import { TimelinePage } from '../pages/TimelinePage';
 import {
-  TimelinePage,
   ReportsPage,
   SettingsPage,
 } from '../pages/PlaceholderPages';

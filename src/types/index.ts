@@ -236,3 +236,78 @@ export interface BrowserSearchArtifact {
   createdAt: string;
   bookmarked?: boolean;
 }
+
+/* Phase 5: Unified Investigation Correlation Domain Models */
+
+export type TimelineEventType =
+  | 'BROWSER_HISTORY'
+  | 'BROWSER_DOWNLOAD'
+  | 'BROWSER_SEARCH'
+  | 'BROWSER_BOOKMARK'
+  | 'IMAGE_IMPORTED'
+  | 'IMAGE_ANALYZED'
+  | 'IMAGE_OCR'
+  | 'IMAGE_DUPLICATE'
+  | 'IMAGE_SIMILARITY'
+  | 'EVIDENCE_IMPORTED';
+
+export interface InvestigationTimelineEvent {
+  id: string;
+  caseId: string;
+  timestamp: string; // ISO 8601
+  type: TimelineEventType;
+  title: string;
+  description?: string;
+  sourceType: 'BROWSER' | 'IMAGE' | 'EVIDENCE';
+  sourceId: string;
+  sourceEvidenceId?: string;
+  browser?: SupportedBrowser;
+  metadata?: Record<string, unknown>;
+}
+
+export type ArtifactRelationType =
+  | 'SOURCE_OF'
+  | 'DERIVED_FROM'
+  | 'DUPLICATE_OF'
+  | 'SIMILAR_TO'
+  | 'DOWNLOADED_FROM'
+  | 'ASSOCIATED_WITH';
+
+export interface ArtifactRelationship {
+  id: string;
+  caseId: string;
+  sourceType: 'EVIDENCE' | 'BROWSER_EVIDENCE' | 'IMAGE_ARTIFACT' | 'BROWSER_DOWNLOAD' | 'BROWSER_HISTORY';
+  sourceId: string;
+  targetType: 'EVIDENCE' | 'BROWSER_EVIDENCE' | 'IMAGE_ARTIFACT' | 'BROWSER_DOWNLOAD' | 'BROWSER_HISTORY';
+  targetId: string;
+  relationType: ArtifactRelationType;
+  confidence?: 'EXPLICIT' | 'DERIVED';
+  createdAt: string;
+  evidence?: Record<string, unknown>;
+}
+
+export type SearchResultType =
+  | 'CASE'
+  | 'EVIDENCE'
+  | 'BROWSER_HISTORY'
+  | 'BROWSER_DOWNLOAD'
+  | 'BROWSER_BOOKMARK'
+  | 'BROWSER_SEARCH'
+  | 'IMAGE'
+  | 'OCR'
+  | 'TIMELINE';
+
+export interface InvestigationSearchResult {
+  id: string;
+  type: SearchResultType;
+  title: string;
+  description?: string;
+  matchedField?: string;
+  matchedValue?: string;
+  caseId: string;
+  artifactId: string;
+  sourceEvidenceId?: string;
+  timestamp?: string;
+  browser?: SupportedBrowser;
+}
+

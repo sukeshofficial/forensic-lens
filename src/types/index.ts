@@ -311,3 +311,105 @@ export interface InvestigationSearchResult {
   browser?: SupportedBrowser;
 }
 
+/* Phase 6: Investigation Reporting Domain Models */
+
+export const REPORT_VERSION = '1.0' as const;
+export const GENERATOR_VERSION = 'ForensicLens Report Generator v1.0';
+export const APP_VERSION = '1.0.0';
+
+export interface CaseReportSummary {
+  caseId: string;
+  name: string;
+  description?: string;
+  investigator?: string;
+  status: CaseStatus;
+  createdAt: string;
+  updatedAt: string;
+  evidenceCount: number;
+  artifactCount: number;
+}
+
+export interface EvidenceReportEntry {
+  id: string;
+  filename: string;
+  type: string;
+  size: number;
+  hash?: string;
+  importedAt: string;
+  source?: string;
+  analysisStatus: AnalysisStatus;
+  bookmarked: boolean;
+  imageStatus?: ImageAnalysisStatus;
+}
+
+export interface ImageReportEntry {
+  id: string;
+  filename: string;
+  evidenceId: string;
+  width?: number;
+  height?: number;
+  mimeType: string;
+  size: number;
+  sha256?: string;
+  hasExif: boolean;
+  hasGps: boolean;
+  hasOcr: boolean;
+  ocrText?: string;
+  analysisStatus: ImageAnalysisStatus;
+  indicators: string[];
+  exif?: Record<string, unknown>;
+  gps?: Record<string, unknown>;
+}
+
+export interface ReportAuditEntry {
+  action: string;
+  description: string;
+  timestamp: string;
+  entityType?: string;
+  entityId?: string;
+}
+
+export type ReportSectionKey =
+  | 'caseInfo'
+  | 'evidence'
+  | 'images'
+  | 'browser'
+  | 'timeline'
+  | 'relationships'
+  | 'audit';
+
+export interface ReportSections {
+  caseInfo: boolean;
+  evidence: boolean;
+  images: boolean;
+  browser: boolean;
+  timeline: boolean;
+  relationships: boolean;
+  audit: boolean;
+}
+
+export interface InvestigationReport {
+  id: string;
+  reportVersion: string;
+  generatorVersion: string;
+  generatedAt: string;
+  caseId: string;
+  caseSummary: CaseReportSummary;
+  evidence: EvidenceReportEntry[];
+  images: ImageReportEntry[];
+  browser: {
+    totalHistory: number;
+    totalDownloads: number;
+    totalBookmarks: number;
+    totalSearches: number;
+    history: BrowserHistoryArtifact[];
+    downloads: BrowserDownloadArtifact[];
+    bookmarks: BrowserBookmarkArtifact[];
+    searches: BrowserSearchArtifact[];
+  };
+  timeline: InvestigationTimelineEvent[];
+  relationships: ArtifactRelationship[];
+  auditLog: ReportAuditEntry[];
+  sections: ReportSections;
+  validationWarnings: string[];
+}
